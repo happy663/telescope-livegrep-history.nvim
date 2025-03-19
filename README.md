@@ -11,12 +11,13 @@ A Neovim plugin that adds search history functionality to Telescope's live_grep 
 
 ## Requirements
 
-- Neovim >= 0.5.0
+- Neovim >= 0.9.0
 - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 
 ## Installation
 
 ### Using lazy.nvim
+
 ```lua
 {
   "happy663/telescope-livegrep-history.nvim",
@@ -48,6 +49,7 @@ vim.keymap.set('n', '<leader>gg', require('telescope').extensions.livegrep_histo
 ## History Storage
 
 Search history is stored at:
+
 ```
 ~/.local/share/nvim/telescope_livegrep_history.json
 ```
