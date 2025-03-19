@@ -5,7 +5,7 @@ end
 
 local history = {}
 local history_file = vim.fn.stdpath("data") .. "/telescope_livegrep_history.json"
-local history_index = 1
+local history_index = 0
 
 local function load_history()
   local file = io.open(history_file, "r")
@@ -58,6 +58,7 @@ local function live_grep_with_history()
   local actions_state = require("telescope.actions.state")
 
   load_history()
+  history_index = 0
 
   builtin.live_grep({
     prompt_title = "Live Grep History",
@@ -75,7 +76,8 @@ local function live_grep_with_history()
         if history_index > 1 then
           history_index = history_index - 1
           picker:set_prompt(history[history_index])
-        else
+        elseif history_index == 1 then
+          history_index = 0
           picker:set_prompt("")
         end
       end)
@@ -91,8 +93,3 @@ local function live_grep_with_history()
   })
 end
 
-return telescope.register_extension {
-  exports = {
-    live_grep_with_history = live_grep_with_history
-  },
-}
