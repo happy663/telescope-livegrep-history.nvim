@@ -8,6 +8,8 @@ A Neovim plugin that adds search history functionality to Telescope's live_grep 
 - Recall previous searches using up/down keys
 - Automatically removes duplicate search history entries
 - Search history is saved in JSON format and persists across Neovim restarts
+- Customizable key mappings
+- Configurable maximum history size
 
 ## Requirements
 
@@ -30,21 +32,37 @@ A Neovim plugin that adds search history functionality to Telescope's live_grep 
 ## Setup
 
 ```lua
-require('telescope').load_extension('livegrep_history')
+-- Load the extension
+require('telescope').load_extension('live_grep_history')
+
+-- Optional: Configure the extension
+require('telescope').setup {
+  extensions = {
+    live_grep_history = {
+      -- Customize key mappings
+      mappings = {
+        up_key = "<Up>",      -- Navigate to older search history
+        down_key = "<Down>",  -- Navigate to newer search history
+        confirm_key = "<CR>", -- Execute search and save to history
+      },
+      max_history = 100,      -- Maximum number of history entries to save
+    }
+  }
+}
 ```
 
 ## Usage
 
 ```lua
 -- Example keymapping
-vim.keymap.set('n', '<leader>gg', require('telescope').extensions.livegrep_history.live_grep_with_history)
+vim.keymap.set('n', '<leader>gg', require('telescope').extensions.live_grep_history.live_grep_with_history)
 ```
 
 ### Basic Operations
 
-- `<Up>`: Navigate to older search history
-- `<Down>`: Navigate to newer search history
-- `<CR>`: Execute search and save to history
+- `<Up>` (or your custom key): Navigate to older search history
+- `<Down>` (or your custom key): Navigate to newer search history
+- `<CR>` (or your custom key): Execute search and save to history
 
 ## History Storage
 
