@@ -58,7 +58,7 @@ require('telescope').setup {
 vim.keymap.set('n', '<leader>gg', require('telescope').extensions.live_grep_history.live_grep_with_history)
 ```
 
-### Basic Operations
+### Default Mappings
 
 - `<Up>` (or your custom key): Navigate to older search history
 - `<Down>` (or your custom key): Navigate to newer search history
