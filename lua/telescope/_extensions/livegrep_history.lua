@@ -3,9 +3,24 @@ if not has_telescope then
 	error("This plugin requires nvim-telescope/telescope.nvim")
 end
 
+local M = {}
 local history = {}
 local history_file = vim.fn.stdpath("data") .. "/telescope_livegrep_history.json"
 local history_index = 0
+
+local config = {
+	mappings = {
+		up_key = "<Up>",
+		down_key = "<Down>",
+		confirm_key = "<CR>",
+	},
+	max_history = 100,
+}
+
+function M.setup(opts)
+	opts = opts or {}
+	config = vim.tbl_deep_extend("force", config, opts or {})
+end
 
 local function load_history()
 	local file = io.open(history_file, "r")
@@ -44,15 +59,15 @@ local function add_history(search_word)
 		return false
 	end, history)
 
-	-- 履歴が100件を超えたら一番古いものを削除
-	if #history > 100 then
+	-- 履歴の最大数を超えたら古いものを削除
+	if #history > config.max_history then
 		table.remove(history)
 	end
 
 	save_history()
 end
 
-local function live_grep_with_history()
+function M.live_grep_with_history()
 	local builtin = require("telescope.builtin")
 	local actions = require("telescope.actions")
 	local actions_state = require("telescope.actions.state")
@@ -64,14 +79,14 @@ local function live_grep_with_history()
 		prompt_title = "Live Grep History",
 		search = history,
 		attach_mappings = function(_, map)
-			map("i", "<Up>", function(_prompt_bufnr)
+			map("i", config.mappings.up_key, function(_prompt_bufnr)
 				local picker = actions_state.get_current_picker(_prompt_bufnr)
 				if history_index < #history then
 					history_index = history_index + 1
 					picker:set_prompt(history[history_index])
 				end
 			end)
-			map("i", "<Down>", function(_prompt_bufnr)
+			map("i", config.mappings.down_key, function(_prompt_bufnr)
 				local picker = actions_state.get_current_picker(_prompt_bufnr)
 				if history_index > 1 then
 					history_index = history_index - 1
@@ -81,7 +96,7 @@ local function live_grep_with_history()
 					picker:set_prompt("")
 				end
 			end)
-			map("i", "<CR>", function(_prompt_bufnr)
+			map("i", config.mappings.confirm_key, function(_prompt_bufnr)
 				local picker = actions_state.get_current_picker(_prompt_bufnr)
 				local search_word = picker:_get_prompt()
 				add_history(search_word)
@@ -94,7 +109,8 @@ local function live_grep_with_history()
 end
 
 return telescope.register_extension({
+	setup = M.setup,
 	exports = {
-		live_grep_with_history = live_grep_with_history,
+		live_grep_with_history = M.live_grep_with_history,
 	},
 })
