@@ -1,0 +1,1 @@
+# telescope-livegrep-history.nvim
