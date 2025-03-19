@@ -44,6 +44,11 @@ local function add_history(search_word)
     return false
   end, history)
 
+  -- 履歴が100件を超えたら一番古いものを削除
+  if #history > 100 then
+    table.remove(history)
+  end
+
   save_history()
 end
 
