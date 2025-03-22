@@ -2,6 +2,10 @@
 
 A Neovim plugin that adds search history functionality to Telescope's live_grep command.
 
+## Demo
+
+[![Image from Gyazo](https://i.gyazo.com/b3ba9bd974a050c4e57ec0863befd769.gif)](https://gyazo.com/b3ba9bd974a050c4e57ec0863befd769)
+
 ## Features
 
 - Saves live_grep search history
