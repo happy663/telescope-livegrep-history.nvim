@@ -74,7 +74,6 @@ Search history is stored at:
 
 ```
 ~/.local/share/nvim/telescope_livegrep_history.json
-
 ```
 
 ## LoadMap
