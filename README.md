@@ -37,7 +37,7 @@ A Neovim plugin that adds search history functionality to Telescope's live_grep 
 
 ```lua
 -- Load the extension
-require('telescope').load_extension('live_grep_history')
+require('telescope').load_extension('livegrep_history')
 
 -- Optional: Configure the extension
 require('telescope').setup {
@@ -59,7 +59,7 @@ require('telescope').setup {
 
 ```lua
 -- Example keymapping
-vim.keymap.set('n', '<leader>gg', require('telescope').extensions.live_grep_history.live_grep_with_history)
+vim.keymap.set('n', '<leader>gg', require('telescope').extensions.livegrep_history.live_grep_with_history)
 ```
 
 ### Default Mappings
