@@ -15,6 +15,7 @@ local config = {
 		confirm_key = "<CR>",
 	},
 	max_history = 100,
+	confirm_action = nil, -- カスタムアクション用コールバック関数
 }
 
 function M.setup(opts)
@@ -101,7 +102,11 @@ function M.live_grep_with_history()
 				local search_word = picker:_get_prompt()
 				add_history(search_word)
 				history_index = 0
-				actions.select_default(_prompt_bufnr)
+				if config.confirm_action and type(config.confirm_action) == "function" then
+					config.confirm_action(_prompt_bufnr, search_word)
+				else
+					actions.select_default(_prompt_bufnr)
+				end
 			end)
 			return true
 		end,
